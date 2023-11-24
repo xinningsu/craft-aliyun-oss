@@ -7,6 +7,7 @@ namespace Sulao\CraftAliyunOss;
 use Craft;
 use craft\behaviors\EnvAttributeParserBehavior;
 use craft\flysystem\base\FlysystemFs;
+use craft\helpers\App;
 use craft\helpers\Assets;
 use Iidestiny\Flysystem\Oss\OssAdapter;
 use League\Flysystem\FilesystemAdapter;
@@ -17,7 +18,7 @@ class Fs extends FlysystemFs
     public string $secret = '';
     public string $endpoint = '';
     public string $bucket = '';
-    public bool   $isCName = false;
+    public string $isCName = '';
     public string $root = '';
 
     public static function displayName(): string
@@ -54,12 +55,12 @@ class Fs extends FlysystemFs
     protected function createAdapter(): FilesystemAdapter
     {
         return new OssAdapter(
-            $this->keyId,
-            $this->secret,
-            $this->endpoint,
-            $this->bucket,
-            $this->isCName,
-            $this->root
+            App::parseEnv($this->keyId),
+            App::parseEnv($this->secret),
+            App::parseEnv($this->endpoint),
+            App::parseEnv($this->bucket),
+            (bool)App::parseEnv($this->isCName),
+            App::parseEnv($this->root)
         );
     }
 
