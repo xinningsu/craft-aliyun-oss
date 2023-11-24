@@ -18,7 +18,7 @@ class Fs extends FlysystemFs
     public string $secret = '';
     public string $endpoint = '';
     public string $bucket = '';
-    public string $isCName = '';
+    public bool   $isCName = false;
     public string $root = '';
 
     public static function displayName(): string
@@ -59,7 +59,7 @@ class Fs extends FlysystemFs
             App::parseEnv($this->secret),
             App::parseEnv($this->endpoint),
             App::parseEnv($this->bucket),
-            (bool)App::parseEnv($this->isCName),
+            $this->isCName,
             App::parseEnv($this->root)
         );
     }
